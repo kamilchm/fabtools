@@ -16,3 +16,4 @@ fabtools/tests/Vagrantfile
 *.pyc
 *.swp
 .idea/
+.vagrant
