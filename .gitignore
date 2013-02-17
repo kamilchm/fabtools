@@ -15,3 +15,4 @@ fabtools/tests/.vagrant
 fabtools/tests/Vagrantfile
 *.pyc
 *.swp
+.idea/
