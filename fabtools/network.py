@@ -4,7 +4,7 @@ Network
 """
 from __future__ import with_statement
 
-from fabric.api import *
+from fabric.api import hide, run, settings
 from fabtools.files import is_file
 
 
@@ -55,5 +55,5 @@ def nameservers():
 
     """
     with settings(hide('running', 'stdout')):
-        res = run("cat /etc/resolv.conf | grep 'nameserver' | cut -d\  -f2")
+        res = run(r"cat /etc/resolv.conf | grep 'nameserver' | cut -d\  -f2")
     return res.splitlines()

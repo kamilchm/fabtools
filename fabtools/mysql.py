@@ -7,7 +7,7 @@ This module provides tools for creating MySQL users and databases.
 """
 from __future__ import with_statement
 
-from fabric.api import *
+from fabric.api import env, hide, prompt, puts, run, settings
 
 from fabtools.utils import run_as_root
 
@@ -87,7 +87,8 @@ def database_exists(name, **kwargs):
     return res.succeeded and (res == name)
 
 
-def create_database(name, owner=None, owner_host='localhost', charset='utf8', collate='utf8_general_ci', **kwargs):
+def create_database(name, owner=None, owner_host='localhost', charset='utf8',
+                    collate='utf8_general_ci', **kwargs):
     """
     Create a MySQL database.
 

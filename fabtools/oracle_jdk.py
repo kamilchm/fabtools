@@ -15,9 +15,9 @@ from fabric.api import run, cd, settings, hide
 from fabtools import system
 from fabtools.require.files import directory as require_directory
 from fabtools.require.files import file as require_file
-from fabtools.utils import run_as_root
 
-DEFAULT_VERSION = '7u15-b03'
+
+DEFAULT_VERSION = '7u17-b02'
 
 
 def install_from_oracle_site(version=DEFAULT_VERSION):
@@ -76,7 +76,7 @@ def version():
 
     Returns ``None`` if it is not installed.
     """
-    with settings(hide('running', 'stdout'), warn_only=True):
+    with settings(hide('running', 'stdout', 'warnings'), warn_only=True):
         res = run('java -version')
     if res.failed:
         return None
@@ -106,7 +106,7 @@ def _extract_jdk_version(java_version_out):
     Extracts JDK version in format like '7u13-b20'
     from 'java -version' command output.
     """
-    re_build = re.search('Runtime Environment \(build (.*?)\)',
+    re_build = re.search(r'Runtime Environment \(build (.*?)\)',
                          java_version_out).group(1)
     version, build = re_build.split('-')
     release = version.split('_')[0].split('.')[1]
