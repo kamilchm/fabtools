@@ -19,8 +19,18 @@ def working_copy(remote_url, path=None, branch="master", update=True,
     """
     Require a working copy of the repository from the ``remote_url``.
 
-    Clones or pulls from the repository under ``remote_url`` and checks out
-    ``branch``.
+    The ``path`` is optional, and defaults to the last segment of the
+    remote repository URL, without its ``.git`` suffix.
+
+    If the ``path`` does not exist, this will clone the remote
+    repository and check out the specified branch.
+
+    If the ``path`` exists and ``update`` is ``True``, it will fetch
+    changes from the remote repository, check out the specified branch,
+    then merge the remote changes into the working copy.
+
+    If the ``path`` exists and ``update`` is ``False``, it will only
+    check out the specified branch, without fetching remote changesets.
 
     :param remote_url: URL of the remote repository (e.g.
                        https://github.com/ronnix/fabtools.git).  The given URL
@@ -31,16 +41,15 @@ def working_copy(remote_url, path=None, branch="master", update=True,
                  filesystem.  If this directory doesn't exist yet, a new
                  working copy is created through ``git clone``.  If the
                  directory does exist *and* ``update == True``, a
-                 ``git pull`` is issued.  If ``path is None`` the ``git clone``
-                 is issued in the current working directory and the directory
-                 name of the working copy is created by ``git``.
+                 ``git fetch`` is issued.  If ``path is None`` the
+                 ``git clone`` is issued in the current working directory and
+                 the directory name of the working copy is created by ``git``.
     :type path: str
 
-    :param branch: Branch to switch to after cloning or pulling.
+    :param branch: Branch to check out.
     :type branch: str
 
-    :param update: Whether or not to update an existing working copy via
-                   ``git pull``.
+    :param update: Whether or not to fetch and merge remote changesets.
     :type update: bool
 
     :param use_sudo: If ``True`` execute ``git`` with
@@ -54,21 +63,20 @@ def working_copy(remote_url, path=None, branch="master", update=True,
     :type user: str
     """
 
+    if path is None:
+        path = remote_url.split('/')[-1].rstrip('.git')
+
     if is_dir(path, use_sudo=use_sudo) and update:
-        # git pull
+        git.fetch(path=path, use_sudo=use_sudo, user=user)
+        git.checkout(path=path, branch=branch, use_sudo=use_sudo, user=user)
         git.pull(path=path, use_sudo=use_sudo, user=user)
 
     elif is_dir(path, use_sudo=use_sudo) and not update:
-        # do nothing
-        return
+        git.checkout(path=path, branch=branch, use_sudo=use_sudo, user=user)
 
     elif not is_dir(path, use_sudo=use_sudo):
-        # git clone
         git.clone(remote_url, path=path, use_sudo=use_sudo, user=user)
-        if path is None:
-            path = remote_url.split('/')[-1].replace('.git', '')
+        git.checkout(path=path, branch=branch, use_sudo=use_sudo, user=user)
 
     else:
         raise ValueError("Invalid combination of parameters.")
-
-    git.checkout(path=path, branch=branch, use_sudo=use_sudo, user=user)

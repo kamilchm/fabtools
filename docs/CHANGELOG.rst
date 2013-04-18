@@ -10,6 +10,9 @@ Version 0.14.0dev (unreleased)
 * Less verbose output
 * Move OS detection functions to ``fabtools.system``
 * Better support for Red Hat based systems
+* Upgrade default Node.js version to 0.10.4
+* Upgrade default Redis version to 2.6.12
+* Improved git support
 
 Version 0.13.0 (2013-03-15)
 ---------------------------
