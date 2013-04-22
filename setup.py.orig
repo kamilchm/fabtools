@@ -22,7 +22,11 @@ setup(
     url='http://fabtools.readthedocs.org/',
     license='BSD',
     install_requires=[
+<<<<<<< HEAD
+        "fabric>=1.5.2",
+=======
         "fabric>=1.6.0",
+>>>>>>> ea3d29bfb04f350d8e8c88dd526062e0aec802f8
     ],
     setup_requires=[],
     tests_require=[

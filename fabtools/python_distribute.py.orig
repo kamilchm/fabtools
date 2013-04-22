@@ -10,7 +10,11 @@ the ``easy_install`` command provided by `distribute`_.
 """
 from __future__ import with_statement
 
+<<<<<<< HEAD
+from fabric.api import cd, hide, run, settings
+=======
 from fabric.api import cd, run
+>>>>>>> ea3d29bfb04f350d8e8c88dd526062e0aec802f8
 
 from fabtools.utils import run_as_root
 

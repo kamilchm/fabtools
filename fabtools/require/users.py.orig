@@ -9,7 +9,11 @@ from fabtools.utils import run_as_root
 
 def user(name, comment=None, home=None, create_home=None, skeleton_dir=None,
          group=None, create_group=True, extra_groups=None, password=None,
+<<<<<<< HEAD
+         system=False, shell=None, uid=None, keys_file=None):
+=======
          system=False, shell=None, uid=None, ssh_public_keys=None):
+>>>>>>> ea3d29bfb04f350d8e8c88dd526062e0aec802f8
     """
     Require a user and its home directory.
 
@@ -42,19 +46,32 @@ def user(name, comment=None, home=None, create_home=None, skeleton_dir=None,
                skeleton_dir=skeleton_dir, group=group,
                create_group=create_group, extra_groups=extra_groups,
                password=password, system=system, shell=shell, uid=uid,
+<<<<<<< HEAD
+               keys_file=keys_file)
+    else:
+        modify(name, comment=comment, home=home, group=group,
+               extra_groups=extra_groups, password=password,
+               shell=shell, uid=uid, keys_file=keys_file)
+=======
                ssh_public_keys=ssh_public_keys)
     else:
         modify(name, comment=comment, home=home, group=group,
                extra_groups=extra_groups, password=password,
                shell=shell, uid=uid, ssh_public_keys=ssh_public_keys)
+>>>>>>> ea3d29bfb04f350d8e8c88dd526062e0aec802f8
 
     # Make sure the home directory exists and is owned by user
     if home:
         require_directory(home, owner=name, use_sudo=True)
 
 
+<<<<<<< HEAD
+def sudoer(username, hosts="ALL", operators="ALL",
+           passwd=False, commands="ALL"):
+=======
 def sudoer(username, hosts="ALL", operators="ALL", passwd=False,
            commands="ALL"):
+>>>>>>> ea3d29bfb04f350d8e8c88dd526062e0aec802f8
     """
     Require sudo permissions for a given user.
 

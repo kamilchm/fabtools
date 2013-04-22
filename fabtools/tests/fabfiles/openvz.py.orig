@@ -126,7 +126,10 @@ def setup_containers():
     from fabtools import require
     from fabtools.openvz import guest, list_ctids
     from fabtools.require.openvz import container
+<<<<<<< HEAD
+=======
     from fabtools.require.redis import VERSION as REDIS_VERSION
+>>>>>>> ea3d29bfb04f350d8e8c88dd526062e0aec802f8
     from fabtools.system import distrib_family
     import fabtools
 

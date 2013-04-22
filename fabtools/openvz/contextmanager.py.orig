@@ -190,6 +190,36 @@ def _run_host_command(command, shell=True, pty=True, combine_stderr=True,
     (Modified from fabric.operations._run_command to ignore prefixes,
     path(), cd(), and always use sudo.)
     """
+<<<<<<< HEAD
+    # Set up new var so original argument can be displayed verbatim later.
+    given_command = command
+    # Handle context manager modifications, and shell wrapping
+    wrapped_command = _shell_wrap(
+        command,
+        shell,
+        _sudo_prefix(None)
+    )
+    # Execute info line
+    if output.debug:
+        print("[%s] %s: %s" % (env.host_string, 'sudo', wrapped_command))
+    elif output.running:
+        print("[%s] %s: %s" % (env.host_string, 'sudo', given_command))
+
+    # Actual execution, stdin/stdout/stderr handling, and termination
+    stdout, stderr, status = _execute(default_channel(), wrapped_command, pty,
+                                      combine_stderr)
+
+    # Assemble output string
+    out = _AttributeString(stdout)
+    err = _AttributeString(stderr)
+
+    # Error handling
+    out.failed = False
+    if status != 0:
+        out.failed = True
+        msg = "%s() received nonzero return code %s while executing" % (
+            'sudo', status
+=======
     manager = _noop
     if warn_only:
         manager = warn_only_manager
@@ -204,6 +234,7 @@ def _run_host_command(command, shell=True, pty=True, combine_stderr=True,
             command,    # !! removed _prefix_commands() & _prefix_env_vars()
             shell,
             _sudo_prefix(None)  # !! always use sudo
+>>>>>>> ea3d29bfb04f350d8e8c88dd526062e0aec802f8
         )
         # Execute info line
         which = 'sudo'          # !! always use sudo
